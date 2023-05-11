@@ -117,7 +117,7 @@
             pnlscnnr.AutoSize = true;
             pnlscnnr.Controls.Add(btnParser);
             pnlscnnr.Controls.Add(btnScanner);
-            pnlscnnr.Controls.Add(richTextBox2);
+            pnlscnnr.Controls.Add(salidas);
             pnlscnnr.Controls.Add(richTextBox1);
             pnlscnnr.Location = new Point(0, 43);
             pnlscnnr.Name = "pnlscnnr";
@@ -147,15 +147,15 @@
             btnScanner.UseVisualStyleBackColor = true;
             btnScanner.Click += btnScanner_Click;
             // 
-            // richTextBox2
+            // salidas
             // 
-            richTextBox2.Dock = DockStyle.Right;
-            richTextBox2.Font = new Font("Segoe UI Black", 21.75F, FontStyle.Bold, GraphicsUnit.Point);
-            richTextBox2.Location = new Point(1092, 0);
-            richTextBox2.Name = "richTextBox2";
-            richTextBox2.Size = new Size(812, 1015);
-            richTextBox2.TabIndex = 1;
-            richTextBox2.Text = "";
+            salidas.Dock = DockStyle.Right;
+            salidas.Font = new Font("Segoe UI Black", 21.75F, FontStyle.Bold, GraphicsUnit.Point);
+            salidas.Location = new Point(1092, 0);
+            salidas.Name = "salidas";
+            salidas.Size = new Size(812, 1015);
+            salidas.TabIndex = 1;
+            salidas.Text = "";
             // 
             // richTextBox1
             // 
