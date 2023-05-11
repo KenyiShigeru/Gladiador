@@ -78,29 +78,30 @@ namespace Gladiador
         private void INSTRUCCIONES()
         {
             texto = EliminarSiguiente();
-            /*if(Regex.IsMatch(texto,Patrones.id))
+            encontrado = Regex.Match(texto, "^" + Patrones.id).Value;
+            if (Regex.IsMatch(texto,Patrones.id))
             {
-                encontrado = Regex.Match(texto, "^"+Patrones.id).Value;
-                if(encontrado == "imprimir")
+                try
                 {
-                    ESCRIBIR();
-                }
-                else if (encontrado == "leer")
-                {
-
-                }
-                else if (encontrado == "mientras")
-                {
-
-                }
-                else
-                {
-                    if (ASIGNACION())
+                    numeracionReservadas palabra = (numeracionReservadas)Patrones.Encontrar(encontrado);
+                    switch (palabra)
                     {
-
+                        case numeracionReservadas.mientras:
+                            break;
+                        case numeracionReservadas.si:
+                            break;
+                        case numeracionReservadas.leer:
+                            break;
+                        default:
+                            MessageBox.Show("Es una asignacion por descarte");
+                            texto = Quitar(encontrado);
+                            break;
                     }
                 }
-            }*/
+                catch
+                {
+                }
+            }
             leyendoinstrucciones = false;
         }
 

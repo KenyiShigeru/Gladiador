@@ -18,12 +18,23 @@ namespace Gladiador
 
         public static LinkedList<String> reservada = new LinkedList<String>(new String[] {"clase","mientras","si","entonces", "leer","imprimir"});
 
+        public static int Encontrar(String id)
+        {
+            int pos = 0;
+            while (reservada.Contains(id))
+            {
+                pos++;
+                if(id == reservada.ElementAt(pos))
+                    return pos;
+            }
+            return pos;
+        }
         
 
         #region Caracteres especiales
         
         
-        public static LinkedList<char> especiales = new LinkedList<char>(new char[] {'(',')','{','}','[',']',','});
+        public static LinkedList<char> especiales = new LinkedList<char>(new char[] {'(',')','{','}','[',']',',',';'});
 
         #endregion
 
@@ -34,6 +45,12 @@ namespace Gladiador
         public static String exponente = "(E(\\+|\\-|)" + digitos + "|)";
         public static String numero = digitos + decimales + exponente;
         #endregion
+    }
+
+
+    public enum numeracionReservadas
+    {
+        clase, mientras, si, entonces, leer, imprimir
     }
 
     public enum TipoToken
