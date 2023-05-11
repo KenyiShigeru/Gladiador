@@ -41,7 +41,7 @@ namespace Gladiador
             Sintaxis sintaxis = new Sintaxis(richTextBox1.Text);
             try
             {
-                if(!tokensadmitidos)
+                if (!tokensadmitidos)
                 {
                     MessageBox.Show("Primero debes generar tokens validos para poder analizar la sintaxis");
                     return;
