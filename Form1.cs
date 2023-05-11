@@ -48,10 +48,14 @@ namespace Gladiador
                 }
                 sintaxis.Analizar();
                 salidas.Text = "Programa sintacticamente correcto";
+                salidas.SelectAll();
+                salidas.SelectionColor = Color.Green;
             }
             catch (Exception ex)
             {
                 salidas.Text = ex.Message;
+                salidas.SelectAll();
+                salidas.SelectionColor = Color.Red;
             }
         }
 
