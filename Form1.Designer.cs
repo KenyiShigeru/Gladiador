@@ -40,7 +40,7 @@
             pnlscnnr = new Panel();
             btnParser = new Button();
             btnScanner = new Button();
-            richTextBox2 = new RichTextBox();
+            salidas = new RichTextBox();
             richTextBox1 = new RichTextBox();
             menuStrip1.SuspendLayout();
             pnlscnnr.SuspendLayout();
