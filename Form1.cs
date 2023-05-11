@@ -15,17 +15,17 @@ namespace Gladiador
             Close();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void btnScanner_Click(object sender, EventArgs e)
         {
             try
             {
                 Scanner sc = new Scanner(richTextBox1.Text);
                 tokensadmitidos = sc.Analizar();
-                richTextBox2.Text = sc.Mensaje;
+                salidas.Text = sc.Mensaje;
             }
             catch (Exception ex)
             {
-                richTextBox2.Text = ex.Message;
+                salidas.Text = ex.Message;
 
             }
         }
@@ -47,11 +47,11 @@ namespace Gladiador
                     return;
                 }
                 sintaxis.Analizar();
-                richTextBox2.Text = "Programa sintacticamente correcto";
+                salidas.Text = "Programa sintacticamente correcto";
             }
             catch (Exception ex)
             {
-                richTextBox2.Text = ex.Message;
+                salidas.Text = ex.Message;
             }
         }
 

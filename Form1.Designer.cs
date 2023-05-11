@@ -145,7 +145,7 @@
             btnScanner.TabIndex = 2;
             btnScanner.Text = "Scanner";
             btnScanner.UseVisualStyleBackColor = true;
-            btnScanner.Click += button1_Click;
+            btnScanner.Click += btnScanner_Click;
             // 
             // richTextBox2
             // 
@@ -196,7 +196,7 @@
         private ToolStripMenuItem scannerToolStripMenuItem;
         private ToolStripMenuItem salirToolStripMenuItem;
         private Panel pnlscnnr;
-        private RichTextBox richTextBox2;
+        private RichTextBox salidas;
         private RichTextBox richTextBox1;
         private Button btnScanner;
         private ToolStripMenuItem parserToolStripMenuItem;
