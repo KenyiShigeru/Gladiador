@@ -15,7 +15,7 @@ namespace Gladiador
             Close();
         }
 
-        private void btnScanner_Click(object sender, EventArgs e)
+        private void button1_Click(object sender, EventArgs e)
         {
             try
             {
@@ -41,21 +41,17 @@ namespace Gladiador
             Sintaxis sintaxis = new Sintaxis(richTextBox1.Text);
             try
             {
-                if (!tokensadmitidos)
+                if(!tokensadmitidos)
                 {
                     MessageBox.Show("Primero debes generar tokens validos para poder analizar la sintaxis");
                     return;
                 }
                 sintaxis.Analizar();
                 richTextBox2.Text = "Programa sintacticamente correcto";
-                richTextBox2.SelectAll();
-                richTextBox2.SelectionColor = Color.Green;
             }
             catch (Exception ex)
             {
                 richTextBox2.Text = ex.Message;
-                richTextBox2.SelectAll();
-                richTextBox2.SelectionColor = Color.Red;
             }
         }
 
@@ -63,7 +59,6 @@ namespace Gladiador
         {
             btnScanner.Visible = false;
             btnParser.Visible = true;
-            richTextBox2.Text = "";
         }
     }
 }
