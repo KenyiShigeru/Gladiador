@@ -40,7 +40,7 @@
             pnlscnnr = new Panel();
             btnParser = new Button();
             btnScanner = new Button();
-            richTextBox2 = new RichTextBox();
+            salidas = new RichTextBox();
             richTextBox1 = new RichTextBox();
             menuStrip1.SuspendLayout();
             pnlscnnr.SuspendLayout();
@@ -51,7 +51,7 @@
             menuStrip1.Items.AddRange(new ToolStripItem[] { archivoToolStripMenuItem, fasesToolStripMenuItem, salirToolStripMenuItem });
             menuStrip1.Location = new Point(0, 0);
             menuStrip1.Name = "menuStrip1";
-            menuStrip1.Size = new Size(1234, 40);
+            menuStrip1.Size = new Size(1904, 40);
             menuStrip1.TabIndex = 0;
             menuStrip1.Text = "menuStrip1";
             // 
@@ -92,14 +92,14 @@
             // scannerToolStripMenuItem
             // 
             scannerToolStripMenuItem.Name = "scannerToolStripMenuItem";
-            scannerToolStripMenuItem.Size = new Size(180, 36);
+            scannerToolStripMenuItem.Size = new Size(173, 36);
             scannerToolStripMenuItem.Text = "Scanner";
             scannerToolStripMenuItem.Click += scannerToolStripMenuItem_Click;
             // 
             // parserToolStripMenuItem
             // 
             parserToolStripMenuItem.Name = "parserToolStripMenuItem";
-            parserToolStripMenuItem.Size = new Size(180, 36);
+            parserToolStripMenuItem.Size = new Size(173, 36);
             parserToolStripMenuItem.Text = "Parser";
             parserToolStripMenuItem.Click += parserToolStripMenuItem_Click;
             // 
@@ -117,17 +117,17 @@
             pnlscnnr.AutoSize = true;
             pnlscnnr.Controls.Add(btnParser);
             pnlscnnr.Controls.Add(btnScanner);
-            pnlscnnr.Controls.Add(richTextBox2);
+            pnlscnnr.Controls.Add(salidas);
             pnlscnnr.Controls.Add(richTextBox1);
             pnlscnnr.Location = new Point(0, 43);
             pnlscnnr.Name = "pnlscnnr";
-            pnlscnnr.Size = new Size(1237, 650);
+            pnlscnnr.Size = new Size(1904, 1015);
             pnlscnnr.TabIndex = 1;
             // 
             // btnParser
             // 
             btnParser.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point);
-            btnParser.Location = new Point(548, 279);
+            btnParser.Location = new Point(884, 488);
             btnParser.Name = "btnParser";
             btnParser.Size = new Size(123, 80);
             btnParser.TabIndex = 3;
@@ -139,23 +139,23 @@
             // btnScanner
             // 
             btnScanner.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point);
-            btnScanner.Location = new Point(548, 279);
+            btnScanner.Location = new Point(884, 488);
             btnScanner.Name = "btnScanner";
             btnScanner.Size = new Size(123, 80);
             btnScanner.TabIndex = 2;
             btnScanner.Text = "Scanner";
             btnScanner.UseVisualStyleBackColor = true;
-            btnScanner.Click += button1_Click;
+            btnScanner.Click += btnScanner_Click;
             // 
-            // richTextBox2
+            // salidas
             // 
-            richTextBox2.Dock = DockStyle.Right;
-            richTextBox2.Font = new Font("Segoe UI Black", 21.75F, FontStyle.Bold, GraphicsUnit.Point);
-            richTextBox2.Location = new Point(717, 0);
-            richTextBox2.Name = "richTextBox2";
-            richTextBox2.Size = new Size(520, 650);
-            richTextBox2.TabIndex = 1;
-            richTextBox2.Text = "";
+            salidas.Dock = DockStyle.Right;
+            salidas.Font = new Font("Segoe UI Black", 21.75F, FontStyle.Bold, GraphicsUnit.Point);
+            salidas.Location = new Point(1092, 0);
+            salidas.Name = "salidas";
+            salidas.Size = new Size(812, 1015);
+            salidas.TabIndex = 1;
+            salidas.Text = "";
             // 
             // richTextBox1
             // 
@@ -163,19 +163,21 @@
             richTextBox1.Font = new Font("Segoe UI Black", 20.25F, FontStyle.Bold, GraphicsUnit.Point);
             richTextBox1.Location = new Point(3, 3);
             richTextBox1.Name = "richTextBox1";
-            richTextBox1.Size = new Size(484, 644);
+            richTextBox1.Size = new Size(759, 1009);
             richTextBox1.TabIndex = 0;
             richTextBox1.Text = "";
             // 
             // Form1
             // 
             AutoScaleMode = AutoScaleMode.Inherit;
-            ClientSize = new Size(1234, 676);
+            AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            ClientSize = new Size(1904, 1041);
             Controls.Add(pnlscnnr);
             Controls.Add(menuStrip1);
             MainMenuStrip = menuStrip1;
             Name = "Form1";
             Text = "Gladiador";
+            WindowState = FormWindowState.Maximized;
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
             pnlscnnr.ResumeLayout(false);
@@ -194,7 +196,7 @@
         private ToolStripMenuItem scannerToolStripMenuItem;
         private ToolStripMenuItem salirToolStripMenuItem;
         private Panel pnlscnnr;
-        private RichTextBox richTextBox2;
+        private RichTextBox salidas;
         private RichTextBox richTextBox1;
         private Button btnScanner;
         private ToolStripMenuItem parserToolStripMenuItem;
