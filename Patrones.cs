@@ -11,6 +11,7 @@ namespace Gladiador
     {
         public static String id = "([a-z]|[A-Z]|ñ|Ñ)+([A-Z]|_|[a-z]|[1-9]|ñ|Ñ)*";
         public static String opRelac = "(<=|>=|==|!=)";
+         
         public String comentario = "(\\/\\*(\\s*|.*?)*\\*\\/)|(\\/\\/.*)";
         //Palabras reservadas
 
@@ -18,7 +19,7 @@ namespace Gladiador
 
         public static LinkedList<String> reservada = new LinkedList<String>(new String[] {"clase","mientras","si","entonces", "leer","imprimir"});
 
-        public static int Encontrar(String id)
+        public static int encontrarReservada(String id)
         {
             int pos = 0;
             while (reservada.Contains(id))
@@ -31,10 +32,24 @@ namespace Gladiador
         }
         
 
+
         #region Caracteres especiales
         
         
-        public static LinkedList<char> especiales = new LinkedList<char>(new char[] {'(',')','{','}','[',']',',',';'});
+        public static LinkedList<char> especiales = new LinkedList<char>(new char[] {'(',')','{','}','[',']',',',';','='});
+        public static int encontrarEspeciales(char id)
+        {
+            int pos = 0;
+            while (especiales.Contains(id))
+            {
+                pos++;
+                if (id == especiales.ElementAt(pos))
+                    return pos;
+            }
+            return pos;
+        }
+
+        
 
         #endregion
 
@@ -47,6 +62,10 @@ namespace Gladiador
         #endregion
     }
 
+    public enum numeracionespeciales
+    {
+        parentesisabre, parentesiscierre, bracketabre, bracketcierra, corcheteabre, corchetecierra, punto, puntoycoma, igual
+    }
 
     public enum numeracionReservadas
     {
@@ -56,5 +75,10 @@ namespace Gladiador
     public enum TipoToken
     {
         Inicio, id, opRelac, comentario, asignacion, reservada, numerico, caracter_especial
+    }
+
+    public enum relacionales
+    {
+        menor, mayor, menorigual, mayorigual, igual
     }
 }
