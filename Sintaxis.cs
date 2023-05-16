@@ -112,10 +112,8 @@ namespace Gladiador
                             break;
                         case numeracionReservadas.entonces:
                             throw new Exception("Se esperaba que pusieras primero una condicion");
-                            break;
                         default:
                             throw new Exception("Se esperaba una instruccion valida");
-                            break;
                     }
                     texto= EliminarSiguiente();
                 }
@@ -311,8 +309,6 @@ namespace Gladiador
             else
                 throw new Exception("Se esperaba iniciara con un parentesis (");
         }
-
-        
 
         private String Quitar(String quitar)
         {

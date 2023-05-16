@@ -19,7 +19,7 @@ namespace Gladiador
         {
             try
             {
-                Scanner sc = new Scanner(richTextBox1.Text);
+                Scanner sc = new Scanner(codigo.Text);
                 tokensadmitidos = sc.Analizar();
                 salidas.Text = sc.Mensaje;
             }
@@ -38,7 +38,7 @@ namespace Gladiador
 
         private void btnParser_Click(object sender, EventArgs e)
         {
-            Sintaxis sintaxis = new Sintaxis(richTextBox1.Text);
+            Sintaxis sintaxis = new Sintaxis(codigo.Text);
             try
             {
                 if (!tokensadmitidos)
@@ -63,6 +63,22 @@ namespace Gladiador
         {
             btnScanner.Visible = false;
             btnParser.Visible = true;
+        }
+
+        private void abrirToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (abrirDoc.ShowDialog() == DialogResult.OK)
+            {
+                Archivos.mostrarTexto(codigo, abrirDoc.FileName);
+            }
+        }
+
+        private void guardarToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (salvar_doc.ShowDialog() == DialogResult.OK)
+            {
+                Archivos.salvarArchivo(codigo, salvar_doc.FileName);
+            }
         }
     }
 }

@@ -31,7 +31,6 @@
             menuStrip1 = new MenuStrip();
             archivoToolStripMenuItem = new ToolStripMenuItem();
             guardarToolStripMenuItem = new ToolStripMenuItem();
-            guardarComoToolStripMenuItem = new ToolStripMenuItem();
             abrirToolStripMenuItem = new ToolStripMenuItem();
             fasesToolStripMenuItem = new ToolStripMenuItem();
             scannerToolStripMenuItem = new ToolStripMenuItem();
@@ -41,7 +40,9 @@
             btnParser = new Button();
             btnScanner = new Button();
             salidas = new RichTextBox();
-            richTextBox1 = new RichTextBox();
+            codigo = new RichTextBox();
+            abrirDoc = new OpenFileDialog();
+            salvar_doc = new SaveFileDialog();
             menuStrip1.SuspendLayout();
             pnlscnnr.SuspendLayout();
             SuspendLayout();
@@ -57,7 +58,7 @@
             // 
             // archivoToolStripMenuItem
             // 
-            archivoToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { guardarToolStripMenuItem, guardarComoToolStripMenuItem, abrirToolStripMenuItem });
+            archivoToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { guardarToolStripMenuItem, abrirToolStripMenuItem });
             archivoToolStripMenuItem.Font = new Font("Segoe UI", 18F, FontStyle.Regular, GraphicsUnit.Point);
             archivoToolStripMenuItem.Name = "archivoToolStripMenuItem";
             archivoToolStripMenuItem.Size = new Size(106, 36);
@@ -66,20 +67,16 @@
             // guardarToolStripMenuItem
             // 
             guardarToolStripMenuItem.Name = "guardarToolStripMenuItem";
-            guardarToolStripMenuItem.Size = new Size(239, 36);
+            guardarToolStripMenuItem.Size = new Size(180, 36);
             guardarToolStripMenuItem.Text = "Guardar";
-            // 
-            // guardarComoToolStripMenuItem
-            // 
-            guardarComoToolStripMenuItem.Name = "guardarComoToolStripMenuItem";
-            guardarComoToolStripMenuItem.Size = new Size(239, 36);
-            guardarComoToolStripMenuItem.Text = "Guardar como";
+            guardarToolStripMenuItem.Click += guardarToolStripMenuItem_Click;
             // 
             // abrirToolStripMenuItem
             // 
             abrirToolStripMenuItem.Name = "abrirToolStripMenuItem";
-            abrirToolStripMenuItem.Size = new Size(239, 36);
+            abrirToolStripMenuItem.Size = new Size(180, 36);
             abrirToolStripMenuItem.Text = "Abrir";
+            abrirToolStripMenuItem.Click += abrirToolStripMenuItem_Click;
             // 
             // fasesToolStripMenuItem
             // 
@@ -118,7 +115,7 @@
             pnlscnnr.Controls.Add(btnParser);
             pnlscnnr.Controls.Add(btnScanner);
             pnlscnnr.Controls.Add(salidas);
-            pnlscnnr.Controls.Add(richTextBox1);
+            pnlscnnr.Controls.Add(codigo);
             pnlscnnr.Location = new Point(0, 43);
             pnlscnnr.Name = "pnlscnnr";
             pnlscnnr.Size = new Size(1904, 1015);
@@ -157,15 +154,25 @@
             salidas.TabIndex = 1;
             salidas.Text = "";
             // 
-            // richTextBox1
+            // codigo
             // 
-            richTextBox1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
-            richTextBox1.Font = new Font("Segoe UI Black", 20.25F, FontStyle.Bold, GraphicsUnit.Point);
-            richTextBox1.Location = new Point(3, 3);
-            richTextBox1.Name = "richTextBox1";
-            richTextBox1.Size = new Size(759, 1009);
-            richTextBox1.TabIndex = 0;
-            richTextBox1.Text = "";
+            codigo.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
+            codigo.Font = new Font("Segoe UI Black", 20.25F, FontStyle.Bold, GraphicsUnit.Point);
+            codigo.Location = new Point(3, 3);
+            codigo.Name = "codigo";
+            codigo.Size = new Size(759, 1009);
+            codigo.TabIndex = 0;
+            codigo.Text = "";
+            // 
+            // abrirDoc
+            // 
+            abrirDoc.FileName = "openFileDialog1";
+            abrirDoc.Filter = "Archivos de tipo Ken(*.ken)|*.ken|Archivo de texto(*.txt)|*.txt";
+            abrirDoc.Tag = "";
+            // 
+            // salvar_doc
+            // 
+            salvar_doc.Filter = "Archivos de tipo Ken(*.ken)|*.ken|Archivo de texto(*.txt)|*.txt";
             // 
             // Form1
             // 
@@ -190,16 +197,17 @@
         private MenuStrip menuStrip1;
         private ToolStripMenuItem archivoToolStripMenuItem;
         private ToolStripMenuItem guardarToolStripMenuItem;
-        private ToolStripMenuItem guardarComoToolStripMenuItem;
         private ToolStripMenuItem abrirToolStripMenuItem;
         private ToolStripMenuItem fasesToolStripMenuItem;
         private ToolStripMenuItem scannerToolStripMenuItem;
         private ToolStripMenuItem salirToolStripMenuItem;
         private Panel pnlscnnr;
         private RichTextBox salidas;
-        private RichTextBox richTextBox1;
+        private RichTextBox codigo;
         private Button btnScanner;
         private ToolStripMenuItem parserToolStripMenuItem;
         private Button btnParser;
+        private OpenFileDialog abrirDoc;
+        private SaveFileDialog salvar_doc;
     }
 }
