@@ -335,7 +335,7 @@ namespace Gladiador
         {
             String patron = "^(" + Patrones.id + "|" + Patrones.numero +//Separe el codigo para que sea mas pequeno
                 ")";
-            return Regex.IsMatch(texto, patron) ? Regex.Match(texto, patron).Value : "";
+            return Regex.IsMatch(texto, patron) ? Regex.Match(texto, patron).Value : ""; 
         }
     }
 }
