@@ -178,7 +178,9 @@
             // 
             AutoScaleMode = AutoScaleMode.Inherit;
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            ClientSize = new Size(1904, 1041);
+            int width = Screen.PrimaryScreen.Bounds.Width-16;
+            int height = Screen.PrimaryScreen.Bounds.Height-65;
+            ClientSize = new Size(width, height);
             Controls.Add(pnlscnnr);
             Controls.Add(menuStrip1);
             MainMenuStrip = menuStrip1;
