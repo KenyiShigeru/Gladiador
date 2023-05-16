@@ -55,11 +55,19 @@ namespace Gladiador
                     try
                     {
                         INSTRUCCIONES();
-                        if (texto[0] != '}')
+                        try
                         {
-                            throw new Exception("Falta la cerradura del bloque de instruccion }");
+                            if (texto[0] != '}')
+                            {
+                                throw new Exception("Falta la cerradura del bloque de instruccion }");
+                            }
+                            texto = avanzar();
+                            return;
                         }
-                        return;
+                        catch
+                        {
+                            throw new Exception("Se esperaba un }");
+                        }
                     }
                     catch(Exception e) 
                     {
@@ -77,9 +85,10 @@ namespace Gladiador
         private void INSTRUCCIONES()
         {
             texto = EliminarSiguiente();
-            encontrado = Regex.Match(texto, "^" + Patrones.id).Value;
             while (Regex.IsMatch(texto,Patrones.id))
             {
+                encontrado = Regex.Match(texto, "^" + Patrones.id).Value;
+                texto = EliminarSiguiente();
                 try
                 {
                     numeracionReservadas palabra = (numeracionReservadas)Patrones.encontrarReservada(encontrado);
@@ -93,9 +102,13 @@ namespace Gladiador
                             ESTRUCTURA_DE_CONTROL();
                             break;
                         case numeracionReservadas.leer:
+                            ENTRADA();
                             break;
                         case numeracionReservadas.variables:
                             DECLARACION();
+                            break;
+                        case numeracionReservadas.imprimir:
+                            ESCRIBIR();
                             break;
                         case numeracionReservadas.entonces:
                             throw new Exception("Se esperaba que pusieras primero una condicion");
@@ -104,6 +117,7 @@ namespace Gladiador
                             throw new Exception("Se esperaba una instruccion valida");
                             break;
                     }
+                    texto= EliminarSiguiente();
                 }
                 catch(Exception e)
                 {
@@ -116,12 +130,50 @@ namespace Gladiador
 
         private void ENTRADA()
         {
-
+            texto = Quitar(encontrado);
+            texto = EliminarSiguiente();
+            if (texto[0] != Patrones.especiales.ElementAt((int)numeracionespeciales.parentesisabre))
+            {
+                throw new Exception("Se esperaba un (");
+            }
+            texto = avanzar();
+            texto = EliminarSiguiente();
+            encontrado = TERMINO();
+            texto = Quitar(encontrado);
+            texto = EliminarSiguiente();
+            if (encontrado == "")
+                throw new Exception("Se esperaba una variable");
+            if (texto[0] != Patrones.especiales.ElementAt((int)numeracionespeciales.parentesiscierre))
+                throw new Exception("Se esperaba que cierre el parentesis");
+            texto = avanzar();
+            texto = EliminarSiguiente();
+            if (texto[0] != Patrones.especiales.ElementAt((int)numeracionespeciales.puntoycoma))
+                throw new ErrorPuntoyComa();
+            texto = avanzar();
         }
 
         private void ESCRIBIR()
         {
-
+            texto = Quitar(encontrado);
+            texto = EliminarSiguiente();
+            if (texto[0] != Patrones.especiales.ElementAt((int) numeracionespeciales.parentesisabre))
+            {
+                throw new Exception("Se esperaba un (");
+            }
+            texto = avanzar();
+            texto = EliminarSiguiente();
+            encontrado = TERMINO();
+            texto = Quitar(encontrado);
+            texto = EliminarSiguiente();
+            if (encontrado == "")
+                throw new Exception("Se requiere una instruccion para mostrar en pantalla");
+            if (texto[0] != Patrones.especiales.ElementAt((int)numeracionespeciales.parentesiscierre))
+                throw new Exception("Se esperaba que cierre el parentesis");
+            texto = avanzar();
+            texto = EliminarSiguiente();
+            if (texto[0] != Patrones.especiales.ElementAt((int)numeracionespeciales.puntoycoma))
+                throw new ErrorPuntoyComa();
+            texto = avanzar();
         }
 
         private void ESTRUCTURA_DE_CONTROL()
@@ -135,9 +187,21 @@ namespace Gladiador
         private void ASIGNACION()
         {
 
-
+            texto = EliminarSiguiente();
+            texto = avanzar();
+            texto = EliminarSiguiente();
+            encontrado = TERMINO();
+            texto = EliminarSiguiente();
+            if (encontrado == "")
+                throw new Exception("Se esperaba que asginara un valor a la variable");
+            texto = Quitar(encontrado);
+            texto = EliminarSiguiente();
+            if (texto[0] != Patrones.especiales.ElementAt((int)numeracionespeciales.puntoycoma))
+                throw new ErrorPuntoyComa();
+            texto = avanzar();
+            return;
             #region Documentacion del funcionamiento ASIGNACION
-            
+
             #endregion
         }
 
@@ -170,19 +234,7 @@ namespace Gladiador
             }
             else if (actual == Patrones.especiales.ElementAt((int)numeracionespeciales.igual))
             {
-                texto = EliminarSiguiente();
-                String patron = "^(" + Patrones.id + "|" + Patrones.numero +//Separe el codigo para que sea mas pequeno
-                    ")";
-                texto = avanzar();
-                encontrado = Regex.IsMatch(texto, patron) ? Regex.Match(texto, patron).Value : "";
-                if (encontrado == "")
-                    throw new Exception("Se esperaba que asginara un valor a la variable");
-                texto = Quitar(encontrado);
-                texto = EliminarSiguiente();
-                if (texto[0] != Patrones.especiales.ElementAt((int)numeracionespeciales.puntoycoma))
-                    throw new ErrorPuntoyComa();
-                texto = avanzar();
-                return;
+                ASIGNACION();
             }
             else
                 throw new ErrorPuntoyComa();
@@ -237,7 +289,7 @@ namespace Gladiador
                             } 
                             catch 
                             {
-                                encontrado = Regex.IsMatch(texto, patron) ? Regex.Match(texto, patron).Value : "";
+                                encontrado = TERMINO();;
                                 texto = Quitar(encontrado);
                                 texto = avanzar();
                                 return;
@@ -246,7 +298,7 @@ namespace Gladiador
                             texto = EliminarSiguiente();
                             texto = avanzar();
                             texto = EliminarSiguiente();
-                            encontrado = Regex.IsMatch(texto, patron) ? Regex.Match(texto, patron).Value : "";
+                            encontrado = TERMINO();;
                             texto = Quitar(encontrado);
                         }
                     }
@@ -279,5 +331,11 @@ namespace Gladiador
             return texto.Substring(1);
         }
         
+        public String TERMINO()
+        {
+            String patron = "^(" + Patrones.id + "|" + Patrones.numero +//Separe el codigo para que sea mas pequeno
+                ")";
+            return Regex.IsMatch(texto, patron) ? Regex.Match(texto, patron).Value : "";
+        }
     }
 }
