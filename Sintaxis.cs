@@ -11,7 +11,6 @@ namespace Gladiador
     {
         private String texto;
         private String encontrado;
-        private bool leyendoinstrucciones;
         public Sintaxis(String texto) 
         {
             this.texto = texto;
@@ -44,7 +43,6 @@ namespace Gladiador
 
         private void BLOQUE()
         {
-            this.leyendoinstrucciones = true;
             texto = EliminarSiguiente();
             try
             {
@@ -63,15 +61,15 @@ namespace Gladiador
                         }
                         return;
                     }
-                    catch
+                    catch(Exception e) 
                     {
-                        throw new Exception("El programa debe terminar con una cerradura }");
+                        throw new Exception(e.Message);
                     }
                 }
             }
-            catch
+            catch(Exception e) 
             {
-                throw new Exception("Error en el analisis");
+                throw new Exception(e.Message);
             }
         }
 
@@ -80,7 +78,7 @@ namespace Gladiador
         {
             texto = EliminarSiguiente();
             encontrado = Regex.Match(texto, "^" + Patrones.id).Value;
-            if (Regex.IsMatch(texto,Patrones.id))
+            while (Regex.IsMatch(texto,Patrones.id))
             {
                 try
                 {
@@ -89,23 +87,29 @@ namespace Gladiador
                     {
                         case numeracionReservadas.mientras:
                             texto = EliminarSiguiente();
-                            CICLO();
+                            ESTRUCTURA_DE_CONTROL();
                             break;
                         case numeracionReservadas.si:
+                            ESTRUCTURA_DE_CONTROL();
                             break;
                         case numeracionReservadas.leer:
                             break;
+                        case numeracionReservadas.variables:
+                            DECLARACION();
+                            break;
+                        case numeracionReservadas.entonces:
+                            throw new Exception("Se esperaba que pusieras primero una condicion");
+                            break;
                         default:
-                            MessageBox.Show("Es una asignacion por descarte");
-                            texto = Quitar(encontrado);
+                            throw new Exception("Se esperaba una instruccion valida");
                             break;
                     }
                 }
-                catch
+                catch(Exception e)
                 {
+                    throw new Exception(e.Message);
                 }
             }
-            leyendoinstrucciones = false;
         }
 
         
@@ -120,7 +124,7 @@ namespace Gladiador
 
         }
 
-        private void CICLO()
+        private void ESTRUCTURA_DE_CONTROL()
         {
             texto = Quitar(encontrado);
             texto = EliminarSiguiente();
@@ -139,20 +143,37 @@ namespace Gladiador
 
         private void DECLARACION()
         {
-
-
+            texto = Quitar(encontrado);
+            texto=EliminarSiguiente();
+            encontrado = Regex.Match(texto, Patrones.id).Value;
+            if (Patrones.reservada.Contains(encontrado))
+                throw new Exception("No se puede usar una palabra reservada como identificador");
+            texto = Quitar(encontrado);
+            texto = EliminarSiguiente();
+            if (texto[0] != Patrones.especiales.ElementAt((int)numeracionespeciales.DOBLEPUNTO))
+                throw new Exception("Se esperaba que definieras un tipo de dato con \":\" \nSintaxis: variable NOMBRE_VARIABLE: TIPODATO[entero, flotante, caracter, boleano]");
+            texto = avanzar();
+            texto=EliminarSiguiente();
+            encontrado = Regex.Match(texto, Patrones.id).Value;
+            if (!Patrones.tipodedato.Contains(encontrado))
+                throw new Exception("Se debe poner un tipo de dato valido [entero, flotante, caracter, boleano]");
+            texto = Quitar(encontrado);
+            texto = EliminarSiguiente();
+            if (texto[0] != Patrones.especiales.ElementAt((int)numeracionespeciales.puntoycoma))
+                throw new Exception("Se esperaba que terminaras la instruccion con un punto y coma");
+            texto = avanzar();
             #region Documentacion funcionamiento DECLARACION
-            /*
-                    tipo -> int | boleano | caracter | flotante
-                    Declaracion -> tipo identificador;
+                /*
+                        TIPO -> int | boleano | caracter | flotante
+                        Declaracion ->  variable IDENTIFICADOR:TIPO;
 
-                VAMOS A EMPEZAR BUSCANDO ESAS PALABRAS RESERVADAS
-                SI LAS ENCUENTRA PASAMOS A LA DECLARACION QUE ES
-                PONER UNA IDENTIFICADOR QUE SERIA EL NOMBRE DE LA 
-                VARIABLE QUE SERÁ RECONOCIBLE PARA EL PROGRAMADOR DE
-                ALLÍ QUE SE LLAME IDENTIFICADOR
-             */
-            #endregion
+                    VAMOS A EMPEZAR BUSCANDO ESAS PALABRAS RESERVADAS
+                    SI LAS ENCUENTRA PASAMOS A LA DECLARACION QUE ES
+                    PONER UNA IDENTIFICADOR QUE SERIA EL NOMBRE DE LA 
+                    VARIABLE QUE SERÁ RECONOCIBLE PARA EL PROGRAMADOR DE
+                    ALLÍ QUE SE LLAME IDENTIFICADOR
+                 */
+                #endregion
         }
 
         private void COMPARACION()
@@ -173,9 +194,10 @@ namespace Gladiador
                     {
                         texto = Quitar(encontrado);
                         texto = EliminarSiguiente();
-                        if (Patrones.especiales.ElementAt((int)numeracionespeciales.igual) == texto[0])
+                        encontrado = texto.Substring(0, 2);
+                        if (Patrones.opRelac.Contains(encontrado))
                         {
-                            texto = avanzar();
+                            texto = Quitar(encontrado);
                             try {
                                 COMPARACION(); 
                             } 
@@ -204,7 +226,7 @@ namespace Gladiador
                 throw new Exception("Se esperaba iniciara con un parentesis (");
         }
 
-
+        
 
         private String Quitar(String quitar)
         {
@@ -213,7 +235,7 @@ namespace Gladiador
 
         private String EliminarSiguiente()
         {
-            String expr = "^(\\n|\\s)";
+            String expr = "^(\\n|\\s)+";
             return Regex.IsMatch(texto, expr)? 
                 texto.Substring(Regex.Match(texto, expr).Length) : texto;
         }

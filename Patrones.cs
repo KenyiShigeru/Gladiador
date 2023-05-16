@@ -17,7 +17,7 @@ namespace Gladiador
 
         public static LinkedList<String> tipodedato = new LinkedList<String>(new String[] {"entero", "flotante", "caracter", "boleano"});
 
-        public static LinkedList<String> reservada = new LinkedList<String>(new String[] {"clase","mientras","si","entonces", "leer","imprimir"});
+        public static LinkedList<String> reservada = new LinkedList<String>(new String[] {"clase","mientras","si","entonces", "leer","imprimir","variable"});
 
         public static int encontrarReservada(String id)
         {
@@ -36,7 +36,7 @@ namespace Gladiador
         #region Caracteres especiales
         
         
-        public static LinkedList<char> especiales = new LinkedList<char>(new char[] {'(',')','{','}','[',']',',',';','='});
+        public static LinkedList<char> especiales = new LinkedList<char>(new char[] {'(',')','{','}','[',']',',',';','=',':'});
         public static int encontrarEspeciales(char id)
         {
             int pos = 0;
@@ -64,12 +64,12 @@ namespace Gladiador
 
     public enum numeracionespeciales
     {
-        parentesisabre, parentesiscierre, bracketabre, bracketcierra, corcheteabre, corchetecierra, punto, puntoycoma, igual
+        parentesisabre, parentesiscierre, bracketabre, bracketcierra, corcheteabre, corchetecierra, punto, puntoycoma, igual, DOBLEPUNTO
     }
 
     public enum numeracionReservadas
     {
-        clase, mientras, si, entonces, leer, imprimir
+        clase, mientras, si, entonces, leer, imprimir,variables
     }
 
     public enum TipoToken
