@@ -159,21 +159,55 @@ namespace Gladiador
                 throw new Exception("Se debe poner un tipo de dato valido [entero, flotante, caracter, boleano]");
             texto = Quitar(encontrado);
             texto = EliminarSiguiente();
-            if (texto[0] != Patrones.especiales.ElementAt((int)numeracionespeciales.puntoycoma))
-                throw new Exception("Se esperaba que terminaras la instruccion con un punto y coma");
-            texto = avanzar();
-            #region Documentacion funcionamiento DECLARACION
-                /*
-                        TIPO -> int | boleano | caracter | flotante
-                        Declaracion ->  variable IDENTIFICADOR:TIPO;
 
-                    VAMOS A EMPEZAR BUSCANDO ESAS PALABRAS RESERVADAS
-                    SI LAS ENCUENTRA PASAMOS A LA DECLARACION QUE ES
-                    PONER UNA IDENTIFICADOR QUE SERIA EL NOMBRE DE LA 
-                    VARIABLE QUE SERÁ RECONOCIBLE PARA EL PROGRAMADOR DE
-                    ALLÍ QUE SE LLAME IDENTIFICADOR
-                 */
-                #endregion
+            #region Zona de cambio al punto y coma por asignacion
+
+            char actual = texto[0];
+            if (actual == Patrones.especiales.ElementAt((int)numeracionespeciales.puntoycoma))
+            {
+                texto = avanzar();
+                return;
+            }
+            else if (actual == Patrones.especiales.ElementAt((int)numeracionespeciales.igual))
+            {
+                texto = EliminarSiguiente();
+                String patron = "^(" + Patrones.id + "|" + Patrones.numero +//Separe el codigo para que sea mas pequeno
+                    ")";
+                texto = avanzar();
+                encontrado = Regex.IsMatch(texto, patron) ? Regex.Match(texto, patron).Value : "";
+                if (encontrado == "")
+                    throw new Exception("Se esperaba que asginara un valor a la variable");
+                texto = Quitar(encontrado);
+                texto = EliminarSiguiente();
+                if (texto[0] != Patrones.especiales.ElementAt((int)numeracionespeciales.puntoycoma))
+                    throw new ErrorPuntoyComa();
+                texto = avanzar();
+                return;
+            }
+            else
+                throw new ErrorPuntoyComa();
+            #endregion 
+
+            #region programa que funciona con el punto y coma
+            /*f (texto[0] != Patrones.especiales.ElementAt((int)numeracionespeciales.puntoycoma))
+                throw new Exception("Se esperaba que terminaras la instruccion con un punto y coma");
+            texto = avanzar();*/
+            #endregion
+
+
+
+            #region Documentacion funcionamiento DECLARACION
+            /*
+                    TIPO -> int | boleano | caracter | flotante
+                    Declaracion ->  variable IDENTIFICADOR:TIPO;
+
+                VAMOS A EMPEZAR BUSCANDO ESAS PALABRAS RESERVADAS
+                SI LAS ENCUENTRA PASAMOS A LA DECLARACION QUE ES
+                PONER UNA IDENTIFICADOR QUE SERIA EL NOMBRE DE LA 
+                VARIABLE QUE SERÁ RECONOCIBLE PARA EL PROGRAMADOR DE
+                ALLÍ QUE SE LLAME IDENTIFICADOR
+             */
+            #endregion
         }
 
         private void COMPARACION()
